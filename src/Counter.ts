@@ -1,17 +1,22 @@
-export class Counter {
-  constructor(state, env) {
+export class Counter implements DurableObject {
+  initializePromise: Promise<void> | undefined;
+  state: DurableObjectState;
+  value: number | undefined;
+
+  constructor(state: DurableObjectState, env: any) {
     this.state = state;
   }
 
-  async initialize() {
-    let stored = await this.state.storage.get("value");
+  async initialize(): Promise<void> {
+    let stored = await this.state.storage.get("value") as number | undefined;
     this.value = stored || 0;
   }
 
   // Handle HTTP requests from clients.
-  async fetch(request) {
+  async fetch(request: Request) {
     // Make sure we're fully initialized from storage.
     if (!this.initializePromise) {
+    // if (this.initializePromise === null) {
       this.initializePromise = this.initialize().catch((err) => {
         // If anything throws during initialization then we need to be
         // sure sure that a future request will retry initialize().
