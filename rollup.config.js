@@ -19,7 +19,7 @@ export default {
     commonjs(),
     nodePolyfills(),
     nodeResolve({ browser: true }),
-    typescript({ allowSyntheticDefaultImports: true }),
+    typescript({ tsconfig: './tsconfig.json' }),
     terser(),
   ],
 }
