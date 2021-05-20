@@ -1,11 +1,13 @@
 import isOdd from 'is-odd'
 
+import path from 'path'
+
 // In order for the workers runtime to find the class that implements
 // our Durable Object namespace, we must export it from the root module.
-export { Counter } from './counter.mjs'
+export { Counter } from './counter'
 
 export default {
-  async fetch(request, env) {
+  async fetch(request: Request, env) {
     try {
       return await handleRequest(request, env)
     } catch (e) {
@@ -14,7 +16,8 @@ export default {
   },
 }
 
-async function handleRequest(request, env) {
+async function handleRequest(request: Request, env) {
+  console.log(path.basename(request.url))
   let id = env.COUNTER.idFromName('A')
   let obj = env.COUNTER.get(id)
   let resp = await obj.fetch(request.url)

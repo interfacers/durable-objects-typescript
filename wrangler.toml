@@ -1,7 +1,7 @@
 name = "worker"
 # type = "javascript" is required to use the `[build]` section
 type = "javascript"
-account_id = ""
+account_id = "1fed5897e8e8d7fa525091234a77b5e4"
 workers_dev = true
 route = ""
 zone_id = ""
